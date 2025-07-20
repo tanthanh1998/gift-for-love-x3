@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>💖 Dành Tặng Riêng Em 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffc0cb, #fff0f5);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1 {
+      color: #e75480;
+      font-size: 5vw;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h2#typing {
+      color: #d6336c;
+      font-size: 4vw;
+      text-align: center;
+      min-height: 40px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s;
+      min-width: 100px;
+    }
+
+    .yes {
+      background-color: #ff69b4;
+      color: #fff;
+    }
+
+    .no {
+      background-color: #ffb6c1;
+      color: #fff;
+      position: relative;
+    }
+
+    .heart {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .btn {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+      h1 {
+        font-size: 7vw;
+      }
+      h2#typing {
+        font-size: 5vw;
+      }
+    }
+
+    /* Popup Styling */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .popup-content {
+      background: #fff0f5;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      text-align: center;
+      animation: zoom 0.4s;
+    }
+
+    @keyframes zoom {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-content h2 {
+      color: #e75480;
+    }
+
+    .popup-content img {
+      max-width: 200px;
+      margin: 20px auto;
+    }
+
+    .popup-content p {
+      color: #d6336c;
+    }
+
+    .popup-content button {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💖 For My Love 💖</h1>
+  <h2 id="typing"></h2>
+
+  <div class="btn-group">
+    <button class="btn yes" onclick="showLove()">Đồng ý 💕</button>
+    <button class="btn no" onmouseover="runAway(this)">Không 😆</button>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="made-it-royalty.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Popup Flower -->
+  <div id="popup" style="display: none;">
+    <div class="popup-content">
+      <h2>Tặng Em Bông Hoa Nhỏ 💐</h2>
+      <img src="hoa-hong.jpg" alt="Flower">
+      <p>Cảm ơn em vì đã đồng ý 💖</p>
+      <button onclick="closePopup()">Đóng lại</button>
+    </div>
+  </div>
+
+  <script>
+    // Typing Effect
+    const text = "Cảm ơn em vì đã đến bên cuộc đời anh 🥰";
+    let i = 0;
+    function typingEffect() {
+      if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typingEffect, 100);
+      }
+    }
+    typingEffect();
+
+    // Show Popup + Play Music when click Yes
+    function showLove() {
+      const music = document.getElementById('bgMusic');
+      music.play();
+      document.getElementById('popup').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    // Runaway "No" Button
+    function runAway(btn) {
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+      btn.style.position = 'absolute';
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    // Floating Hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
